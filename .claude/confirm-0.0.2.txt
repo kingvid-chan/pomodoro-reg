@@ -1,0 +1,1 @@
+直接实施上述技术方案，不要再次确认。先读项目文件，修改 src/index.html，最后 git add + git commit 并报告自测完成。

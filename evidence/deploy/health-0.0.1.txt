@@ -1,0 +1,17 @@
+url: http://120.24.117.67/projects/pomodoro-reg/
+time: 2026-06-17T13:16:34+00:00
+response_headers:
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Wed, 17 Jun 2026 13:16:56 GMT
+Content-Type: text/html
+Content-Length: 5029
+Last-Modified: Wed, 17 Jun 2026 13:16:18 GMT
+Connection: keep-alive
+ETag: "6a329e22-13a5"
+Cache-Control: no-cache
+Accept-Ranges: bytes
+
+
+status: 200
+cache_control_present: true

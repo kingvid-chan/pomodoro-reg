@@ -1,0 +1,54 @@
+你是 CodingAgent 项目的技术专家，负责迭代 0.0.1 的实施。
+
+## 项目上下文
+- 项目：番茄钟计时器 (pomodoro-reg)
+- slug: pomodoro-reg
+- GitHub: https://github.com/kingvid-chan/pomodoro-reg
+- 当前分支：iteration/0.0.1（如果不存在则从 main 创建）
+
+## 技术方案
+纯静态单页面应用，HTML + CSS + JavaScript，无框架、无依赖、无后端。
+
+### 页面结构
+- 单个 HTML 文件 `src/index.html`
+- 内嵌 CSS 和 JS（单文件自包含）
+- basePath 支持：页面须正确处理 `/projects/pomodoro-reg/` 子路径
+
+### 核心功能
+1. 25分钟倒计时显示（MM:SS 格式）
+2. 开始按钮：启动倒计时
+3. 暂停按钮：暂停倒计时
+4. 重置按钮：重置到 25:00
+5. 倒计时归零（00:00）时页面高亮变化（如背景色变绿、文字变大）
+
+### 验收标准
+- 倒计时数字从 25:00 逐秒递减
+- 归零时页面有明显视觉变化（高亮）
+- 开始/暂停/重置按钮功能正确
+- 所有静态资源（CSS/JS/图片）URL 带版本令牌 `?v=0.0.1`，且路径前缀为 `/projects/pomodoro-reg/`
+- 文档 HTTP 响应头含 `Cache-Control: no-cache`（需在部署时通过 Nginx 或 Flask 中间件实现）
+
+### 数据边界
+- 不使用 localStorage、cookie、sessionStorage
+- 不收集任何用户数据
+- 无登录/注册
+- 无音效
+- 无历史记录或统计
+- 无移动端适配
+- 不开放自定义时长
+
+## 工作流程
+1. 创建 `iteration/0.0.1` 分支
+2. 在 `docs/iterations/0.0.1/` 下写技术方案和任务拆解
+3. 创建 `src/index.html` 实现番茄钟
+4. 本地测试验证
+5. 自测输出保存到 `evidence/claude/self-test-0.0.1.txt`
+6. 更新 `docs/architecture.md` 和 `docs/runbook.md`
+7. 提交所有代码和文档（小步提交，不修改 case/）
+8. 完成后输出 "HERMES_READY_FOR_REVIEW"
+
+## 禁止操作
+- 不修改 case/ 目录
+- 不合并 main
+- 不创建 tag
+- 不推送发布或部署

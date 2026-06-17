@@ -1,0 +1,9 @@
+host: aliyun-cowork
+ip: 120.24.117.67
+url: http://120.24.117.67/projects/pomodoro-reg/
+path: /projects/pomodoro-reg/
+filesystem_path: /srv/codingagent/pomodoro-reg/src/
+method: scp + nginx static alias
+nginx: alias /srv/codingagent/pomodoro-reg/src/; index index.html; add_header Cache-Control no-cache always;
+commit: d1b2293fef30a6fff8d0752c8a7a8d8ceaf25f42
+tag: 0.0.1
