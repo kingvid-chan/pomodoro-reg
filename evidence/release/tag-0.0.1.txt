@@ -1,0 +1,6 @@
+tag: 0.0.1
+tag_object: 5a7962c62d5672a92649e52d50cee331c8c8357a
+commit: e5ca8b2ea7aa4de3637df868cd429ae81f37dd9f
+github_tag_url: https://github.com/kingvid-chan/pomodoro-reg/releases/tag/0.0.1
+github_repo_url: https://github.com/kingvid-chan/pomodoro-reg
+pushed: true
