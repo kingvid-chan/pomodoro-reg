@@ -1,0 +1,84 @@
+{
+  "schema_version": 3,
+  "public_url": "http://120.24.117.67/projects/pomodoro-reg/",
+  "final_url": "http://localhost:8700/src/index.html",
+  "base_path_ok": true,
+  "release_version": "0.0.1",
+  "document_response_headers": {
+    "Cache-Control": "no-cache"
+  },
+  "static_assets": [],
+  "stylesheets": [],
+  "asset_probes": [],
+  "pages": [
+    {
+      "url": "http://localhost:8700/src/index.html",
+      "title": "番茄钟计时器",
+      "checks": [
+        {
+          "name": "display_initial_25_00",
+          "ok": true
+        },
+        {
+          "name": "start_countdown",
+          "ok": true
+        },
+        {
+          "name": "pause_freeze",
+          "ok": true
+        },
+        {
+          "name": "reset_to_idle",
+          "ok": true
+        },
+        {
+          "name": "finished_highlight",
+          "ok": true
+        },
+        {
+          "name": "button_state_machine",
+          "ok": true
+        }
+      ]
+    }
+  ],
+  "workflow_checks": [
+    {
+      "name": "idle_to_running",
+      "ok": true
+    },
+    {
+      "name": "running_to_paused",
+      "ok": true
+    },
+    {
+      "name": "paused_to_running",
+      "ok": true
+    },
+    {
+      "name": "paused_to_idle",
+      "ok": true
+    },
+    {
+      "name": "running_to_finished",
+      "ok": true
+    },
+    {
+      "name": "finished_to_idle",
+      "ok": true
+    }
+  ],
+  "failed_requests": [],
+  "http_errors": [],
+  "console_errors": [],
+  "screenshots": [
+    "evidence/verification/page-0.0.1-0ff95485931948ad889375e0462975eb.png",
+    "evidence/verification/page-0.0.1-0e4fa0ee5e0d4217bf9958280bb16a03.png"
+  ],
+  "visual_review": {
+    "provider": "kimi",
+    "model": "kimi-ocr",
+    "verdict": "pass",
+    "issues": []
+  }
+}
