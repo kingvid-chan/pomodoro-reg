@@ -1,34 +1,84 @@
 # 番茄钟计时器 运行手册
 
-## 本地安装与启动
+## 本地启动
 
-## 测试、构建与健康检查
+```bash
+cd src && python3 -m http.server 8600
+# 访问 http://localhost:8600/index.html
+```
 
-记录自动测试、生产启动、health endpoint、公网浏览器关键流程、静态资源、
-控制台错误和 Kimi 截图视觉验收方式。
+或用任意静态文件服务器：
+```bash
+npx serve src -p 8600
+```
+
+## 测试
+
+纯前端，浏览器直接打开验证：
+1. 检查显示 "25:00"
+2. 点击"开始"，确认倒计时逐秒递减
+3. 点击"暂停"，确认停止
+4. 点击"继续"，确认恢复
+5. 等待归零（或修改 JS 加速测试），确认绿色高亮
+6. 点击"重置"，确认回到 25:00
 
 ## 环境变量
 
+无需环境变量。纯静态 HTML。
+
 ## Base Path
 
-项目必须支持 `/projects/pomodoro-reg/`，静态资源和前端路由不得假设部署在 `/`。
-
-公网浏览器验收时，最终 URL 和所有项目资源必须保留此前缀。
+项目部署在 `/projects/pomodoro-reg/`。HTML 使用 `<base href="/projects/pomodoro-reg/">` 确保所有资源路径正确。
 
 ## 缓存策略
 
-功能迭代后公网 URL 不变，必须防止老板浏览器命中缓存旧页面：
-
-- HTML 文档**真实 HTTP 响应头**必须携带 `Cache-Control: no-cache`（或 `no-store`），每次重新校验；**不得仅用 `<meta http-equiv>` 标签**（浏览器基本忽略其缓存语义），必须由服务器/框架下发响应头；
-- 所有静态资源 URL 必须携带版本令牌 `?v=<当前发布版本 0.0.N>`，且路径保留 `/projects/pomodoro-reg/` 前缀（令牌挂在已带 basePath 的 URL 上）；
-- 版本令牌随 `0.0.N` 递增，于是每个交付版本自动触发缓存失效。
-
-浏览器验收（schema v3 机器报告）会逐条重算：`static_assets` 状态码 200–399、URL 带版本令牌且在 basePath 下（自包含页面可为空），`document_response_headers` 的真实 `Cache-Control` 为 no-cache/no-store，视觉审查须由 Kimi 视觉模型完成。
+- **HTML 文档**：Nginx 配置必须返回 `Cache-Control: no-cache` 响应头
+  ```nginx
+  location /projects/pomodoro-reg/ {
+      add_header Cache-Control "no-cache";
+  }
+  ```
+- **静态资源**：当前版本自包含无外部资源。如有则带 `?v=0.0.N` 版本令牌
 
 ## Aliyun systemd 与 Nginx
 
+### 部署路径
+```
+/srv/codingagent/pomodoro-reg/src/index.html
+```
+
+### systemd 服务（如使用 Flask 后端）
+当前版本为纯静态，直接在 Nginx 中 serve：
+```nginx
+location /projects/pomodoro-reg/ {
+    alias /srv/codingagent/pomodoro-reg/src/;
+    index index.html;
+    add_header Cache-Control "no-cache";
+}
+```
+
+### 健康检查
+```bash
+curl -I http://120.24.117.67/projects/pomodoro-reg/
+# 应返回 HTTP 200 + Cache-Control: no-cache
+```
+
 ## 日志查看
+
+Nginx 访问日志：
+```bash
+ssh aliyun-cowork "tail -50 /var/log/nginx/access.log | grep pomodoro-reg"
+```
 
 ## 常见故障与恢复
 
+1. **404 错误**：检查 Nginx location 配置 `root` vs `alias`，确认文件路径
+2. **缓存旧页面**：检查响应头是否有 `Cache-Control: no-cache`
+3. **端口冲突**：当前分配 8600，检查 `ss -tlnp | grep 8600`
+
 ## 回滚到精确 Tag
+
+```bash
+git fetch --tags && git checkout 0.0.1
+# 重新部署 src/index.html
+```

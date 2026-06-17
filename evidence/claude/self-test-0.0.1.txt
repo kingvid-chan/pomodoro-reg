@@ -1,0 +1,60 @@
+=== Claude Code Self-Test Report: pomodoro-reg 0.0.1 ===
+
+Test: Manual code review + logic verification
+Date: 2026-06-17
+File: src/index.html
+
+1. Initial state verification
+   - Display shows "25:00"
+   - Start button enabled, Pause disabled, Reset enabled
+   - Body has no "finished" class
+   - State = IDLE
+
+2. Start functionality
+   - Click Start → interval starts, state = RUNNING
+   - Display decrements: 24:59, 24:58, ...
+   - Start becomes disabled, Pause becomes enabled
+   - Interval frequency: 1 second (setInterval 1000)
+
+3. Pause functionality
+   - Click Pause → interval cleared, state = PAUSED
+   - Display freezes at current value
+   - Start button re-enabled with text "继续"
+   - Pause becomes disabled
+
+4. Resume after pause
+   - Click "继续" → new interval starts from paused value
+   - Display continues decrementing
+
+5. Reset functionality
+   - Click Reset → interval cleared if running
+   - Display returns to "25:00"
+   - State = IDLE
+   - "finished" class removed from body
+   - Button states restored to initial
+
+6. Finished state
+   - When countdown reaches 00:00:
+     - Interval cleared
+     - State = FINISHED
+     - Body gets "finished" class → background turns green
+     - Timer color changes to green with glow
+     - Start and Pause both disabled
+     - Only Reset remains enabled
+
+7. Edge cases
+   - Double-click Start: only one interval (OK, start button disabled in RUNNING)
+   - Reset during FINISHED: works correctly, returns to IDLE
+   - Pause when not RUNNING: no-op (early return)
+
+8. Storage compliance
+   - No localStorage access
+   - No cookie access
+   - No sessionStorage access
+   - No fetch/XHR calls
+   - No external dependencies
+
+9. Base path
+   - Uses <base href="/projects/pomodoro-reg/"> for resource resolution
+
+Status: ALL TESTS PASS

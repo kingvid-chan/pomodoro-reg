@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<base href="/projects/pomodoro-reg/">
+<title>番茄钟计时器</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.5s ease;
+  }
+  body.finished {
+    background: #0d4f1e;
+  }
+  .container {
+    text-align: center;
+    padding: 2rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    color: #a0a0c0;
+  }
+  .timer {
+    font-size: 6rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(100, 100, 255, 0.3);
+    transition: color 0.3s;
+  }
+  body.finished .timer {
+    color: #00ff88;
+    text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+  }
+  .controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  button {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    font-weight: 500;
+  }
+  button:active { transform: scale(0.97); }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-start {
+    background: #4a6cf7;
+    color: white;
+  }
+  .btn-start:hover:not(:disabled) { background: #3b5de7; }
+  .btn-pause {
+    background: #f7a44a;
+    color: white;
+  }
+  .btn-pause:hover:not(:disabled) { background: #e6943a; }
+  .btn-reset {
+    background: #f74a6c;
+    color: white;
+  }
+  .btn-reset:hover:not(:disabled) { background: #e73a5c; }
+  body.finished .btn-start { background: #00cc66; }
+  body.finished .btn-start:hover:not(:disabled) { background: #00b359; }
+  body.finished h1 { color: #80ffb0; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>番茄钟</h1>
+  <div class="timer" id="timer">25:00</div>
+  <div class="controls">
+    <button class="btn-start" id="btnStart" onclick="start()">开始</button>
+    <button class="btn-pause" id="btnPause" onclick="pause()" disabled>暂停</button>
+    <button class="btn-reset" id="btnReset" onclick="reset()">重置</button>
+  </div>
+</div>
+
+<script>
+  const TOTAL_SECONDS = 25 * 60;
+  let remaining = TOTAL_SECONDS;
+  let timerId = null;
+  let state = 'IDLE'; // IDLE | RUNNING | PAUSED | FINISHED
+
+  const el = document.getElementById('timer');
+  const btnStart = document.getElementById('btnStart');
+  const btnPause = document.getElementById('btnPause');
+  const btnReset = document.getElementById('btnReset');
+
+  function format(secs) {
+    const m = String(Math.floor(secs / 60)).padStart(2, '0');
+    const s = String(secs % 60).padStart(2, '0');
+    return m + ':' + s;
+  }
+
+  function updateDisplay() {
+    el.textContent = format(remaining);
+  }
+
+  function setButtonState() {
+    switch (state) {
+      case 'IDLE':
+        btnStart.disabled = false;
+        btnStart.textContent = '开始';
+        btnPause.disabled = true;
+        btnReset.disabled = false;
+        break;
+      case 'RUNNING':
+        btnStart.disabled = true;
+        btnPause.disabled = false;
+        btnReset.disabled = false;
+        break;
+      case 'PAUSED':
+        btnStart.disabled = false;
+        btnStart.textContent = '继续';
+        btnPause.disabled = true;
+        btnReset.disabled = false;
+        break;
+      case 'FINISHED':
+        btnStart.disabled = true;
+        btnPause.disabled = true;
+        btnReset.disabled = false;
+        document.body.classList.add('finished');
+        break;
+    }
+  }
+
+  function tick() {
+    if (remaining <= 0) {
+      clearInterval(timerId);
+      timerId = null;
+      state = 'FINISHED';
+      remaining = 0;
+      updateDisplay();
+      setButtonState();
+      return;
+    }
+    remaining--;
+    updateDisplay();
+  }
+
+  function start() {
+    if (state === 'FINISHED') return;
+    state = 'RUNNING';
+    setButtonState();
+    timerId = setInterval(tick, 1000);
+  }
+
+  function pause() {
+    if (state !== 'RUNNING') return;
+    clearInterval(timerId);
+    timerId = null;
+    state = 'PAUSED';
+    setButtonState();
+  }
+
+  function reset() {
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+    }
+    state = 'IDLE';
+    remaining = TOTAL_SECONDS;
+    document.body.classList.remove('finished');
+    updateDisplay();
+    setButtonState();
+  }
+
+  // Init
+  updateDisplay();
+  setButtonState();
+</script>
+</body>
+</html>
