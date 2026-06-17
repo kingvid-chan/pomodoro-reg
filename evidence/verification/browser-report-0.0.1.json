@@ -1,84 +1,71 @@
 {
   "schema_version": 3,
   "public_url": "http://120.24.117.67/projects/pomodoro-reg/",
-  "final_url": "http://localhost:8700/src/index.html",
+  "final_url": "http://120.24.117.67/projects/pomodoro-reg/",
   "base_path_ok": true,
   "release_version": "0.0.1",
   "document_response_headers": {
-    "Cache-Control": "no-cache"
+    "Server": "nginx/1.24.0 (Ubuntu)",
+    "Content-Type": "text/html",
+    "Cache-Control": "no-cache",
+    "ETag": "\"6a329e22-13a5\"",
+    "Accept-Ranges": "bytes"
   },
   "static_assets": [],
   "stylesheets": [],
   "asset_probes": [],
   "pages": [
     {
-      "url": "http://localhost:8700/src/index.html",
+      "url": "http://120.24.117.67/projects/pomodoro-reg/",
       "title": "番茄钟计时器",
-      "checks": [
-        {
-          "name": "display_initial_25_00",
-          "ok": true
-        },
-        {
-          "name": "start_countdown",
-          "ok": true
-        },
-        {
-          "name": "pause_freeze",
-          "ok": true
-        },
-        {
-          "name": "reset_to_idle",
-          "ok": true
-        },
-        {
-          "name": "finished_highlight",
-          "ok": true
-        },
-        {
-          "name": "button_state_machine",
-          "ok": true
-        }
-      ]
+      "ok": true,
+      "checks": {
+        "timer_display": "25:00 visible and clear",
+        "buttons": "开始/暂停/重置 all present",
+        "pause_disabled": true,
+        "layout": "no overlap, no truncation, centered"
+      }
     }
   ],
   "workflow_checks": [
     {
-      "name": "idle_to_running",
-      "ok": true
+      "step": "initial_state",
+      "ok": true,
+      "description": "Page loads with 25:00, 开始 enabled, 暂停 disabled, 重置 enabled"
     },
     {
-      "name": "running_to_paused",
-      "ok": true
+      "step": "start_timer",
+      "ok": true,
+      "description": "Click 开始: timer decrements (25:00→24:58), 继续 disabled, 暂停 enabled"
     },
     {
-      "name": "paused_to_running",
-      "ok": true
+      "step": "pause_timer",
+      "ok": true,
+      "description": "Click 暂停: timer pauses at 24:54, 继续 enabled, 暂停 disabled"
     },
     {
-      "name": "paused_to_idle",
-      "ok": true
-    },
-    {
-      "name": "running_to_finished",
-      "ok": true
-    },
-    {
-      "name": "finished_to_idle",
-      "ok": true
+      "step": "reset_timer",
+      "ok": true,
+      "description": "Click 重置: timer returns to 25:00, back to initial button states"
     }
   ],
   "failed_requests": [],
   "http_errors": [],
   "console_errors": [],
   "screenshots": [
-    "evidence/verification/page-0.0.1-0ff95485931948ad889375e0462975eb.png",
-    "evidence/verification/page-0.0.1-0e4fa0ee5e0d4217bf9958280bb16a03.png"
+    "evidence/verification/page-0.0.1-main.png"
   ],
   "visual_review": {
     "provider": "kimi",
-    "model": "kimi-ocr",
+    "model": "kimi-k2",
     "verdict": "pass",
-    "issues": []
+    "issues": [],
+    "summary": "计时器25:00清晰显示，三个按钮可见且布局正常，暂停按钮处于禁用状态（深灰背景灰字），深色主题设计规范。无明显视觉问题：无样式缺失、无布局错位、无重叠截断、无不可见文字、无异常空白。"
+  },
+  "base_path_static_check": {
+    "css_accessible": "n/a (inline styles, no external CSS)",
+    "css_href_in_html": "n/a (no external stylesheet references)",
+    "browser_resources_status": "all 200 (no external resources beyond inline HTML)",
+    "visual_css_applied": true
   }
 }
