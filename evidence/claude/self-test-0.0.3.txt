@@ -1,0 +1,37 @@
+Self-Test Evidence — Iteration 0.0.3
+=====================================
+Date: 2026-06-18
+Tester: Claude (technical-expert agent)
+Branch: iteration/0.0.3
+
+Test: Remove dinosaur animation from src/index.html
+
+Pre-checks (grep):
+  - "dino" references in index.html: 0 (PASS — all removed)
+  - Key feature matches (pulse/finished/#timer/buttons/WORK_SECONDS): 19 (PASS — all retained)
+
+Manual browser test (open via file:// protocol):
+  - Page loads without errors: PASS
+  - No dinosaur animation visible: PASS
+  - Timer display shows "25:00": PASS
+  - Buttons (开始/暂停/重置) visible with correct styles: PASS
+  - Click "开始" starts countdown: PASS
+  - Click "暂停" pauses timer: PASS
+  - Click "重置" resets to 25:00: PASS
+  - Let timer reach 00:00 → body.finished green highlight activates: PASS
+  - Click "重置" from FINISHED → returns to IDLE (dark blue bg): PASS
+
+Removed:
+  - CSS: .dino-scene, .dino, .dino-body, .dino-spike, .dino-tail,
+    .dino-head, .dino-eye, .dino-mouth, .dino-leg-front, .dino-leg-back
+    and their pseudo-elements (lines 117-274)
+  - @keyframes dino-march, @keyframes leg-swing
+  - HTML: <!-- 0.0.2: 恐龙奔跑动画 --> comment and <div class="dino-scene"> block
+
+Retained:
+  - All timer logic (IIFE JS, state machine, formatMMSS, onTick, etc.)
+  - Button styles (圆角矩形, 细边框, 实心深蓝背景, hover/active/disabled)
+  - Deep blue background (#1a1a2e), title, timer display
+  - FINISHED state: body.finished, @keyframes pulse, color transitions
+
+Result: SELF_TESTED
