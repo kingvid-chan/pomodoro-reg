@@ -1,0 +1,46 @@
+{
+  "schema_version": 3,
+  "public_url": "http://120.24.117.67/projects/pomodoro-reg/",
+  "final_url": "http://120.24.117.67/projects/pomodoro-reg/",
+  "base_path_ok": true,
+  "release_version": "0.0.3",
+  "document_response_headers": {
+    "Cache-Control": "no-cache"
+  },
+  "static_assets": [],
+  "stylesheets": [],
+  "asset_probes": [],
+  "pages": [
+    {
+      "url": "http://120.24.117.67/projects/pomodoro-reg/",
+      "title": "番茄钟计时器",
+      "ok": true
+    }
+  ],
+  "workflow_checks": [
+    {"action": "页面加载", "ok": true, "detail": "标题、25:00倒计时、三按钮完整渲染，无恐龙动画"},
+    {"action": "点击开始", "ok": true, "detail": "倒计时从25:00开始逐秒递减，按钮状态切换正确"},
+    {"action": "点击暂停", "ok": true, "detail": "倒计时暂停，暂停按钮变禁用，继续按钮可用"},
+    {"action": "点击重置", "ok": true, "detail": "倒计时回到25:00，按钮恢复初始状态，无恐龙动画"}
+  ],
+  "failed_requests": [],
+  "http_errors": [],
+  "console_errors": [],
+  "screenshots": [
+    "evidence/verification/screenshot-0.0.3.png"
+  ],
+  "visual_review": {
+    "provider": "kimi",
+    "model": "kimi",
+    "verdict": "pass",
+    "issues": [],
+    "checks": {
+      "标题番茄钟计时器": true,
+      "背景深蓝色": true,
+      "25:00白色大字居中": true,
+      "按钮圆角细边框": true,
+      "暂停按钮禁用态": true,
+      "无恐龙动画": true
+    }
+  }
+}
