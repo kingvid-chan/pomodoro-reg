@@ -1,0 +1,26 @@
+Independent Verification — Iteration 0.0.3
+===========================================
+Date: 2026-06-18
+Verifier: Hermes (independent)
+Verified Commit: 3c543af20e1e5b60a2ab88947eee70f7cd6715b5
+
+1. TEXT CHECKS
+   - grep -i dino src/index.html: 0 matches (PASS)
+   - Key features grep (WORK_SECONDS/formatMMSS/transition/finished/pulse/buttons): 28 matches (PASS)
+   - HTML structure (h1/timer/controls/container): intact (PASS)
+
+2. LOCAL BROWSER VERIFICATION
+   - Page loads: PASS
+   - Title "番茄钟计时器" visible: PASS
+   - Deep blue background: PASS
+   - Timer displays "25:00": PASS
+   - Three buttons (开始/暂停/重置) present with pill-shaped style: PASS
+   - No dinosaur animation visible: PASS
+   - Console errors: 0 (PASS)
+
+3. FUNCTIONAL TESTS
+   - Click 开始 → countdown starts, button shows "继续" (disabled): PASS
+   - Click 暂停 → timer pauses, 暂停 disabled: PASS
+   - Click 重置 → returns to IDLE, 25:00, 开始 enabled: PASS
+
+RESULT: VERIFICATION_PASSED
