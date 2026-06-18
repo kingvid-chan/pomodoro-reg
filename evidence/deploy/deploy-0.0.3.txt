@@ -1,0 +1,8 @@
+Deploy Evidence — Iteration 0.0.3
+==================================
+Date: 2026-06-18
+Method: scp
+Target: aliyun-cowork:/srv/codingagent/pomodoro-reg/src/index.html
+Nginx: alias /srv/codingagent/pomodoro-reg/src/ → /projects/pomodoro-reg/
+Cache-Control: no-cache
+HTTP status: 200
